@@ -1,80 +1,128 @@
 <template>
-    <div class="product">
+    <div class="product" v-if="product">
         <div class="wrapper">
             <div class="now-page">
                 <p>Главная > <span>Камера наблюдения - HIKVISON </span> <a>Купить в один клик</a></p>
             </div>
             <div class="product-content">
                 <div class="product-content-block1">
-                    <div><img src="@/assets/images/a.png" alt=""></div>
-                    <div><img src="@/assets/images/b.png" alt=""></div>
-                    <div><img src="@/assets/images/c.png" alt=""></div>
-                    <div><img src="@/assets/images/d.png" alt=""></div>
+                    <div v-for="(item, index) in product.images" :key="index">
+                        <img @click="openImg(index)" :src="item" alt="">
+                    </div>
                 </div>
                 <div class="product-content-block2">
-                    <div class="products-status">
-                        Отсутствует
+                    <div :style="{backgroundColor: textColor(product.product_status)}" class="products-status">
+                        {{product.product_status}}
                     </div>
-                    <img src="@/assets/images/e.png" alt="">
+                    <img :src="image || product.images[0]" alt="">
                 </div>
                 <div class="product-content-block3">
-                    <h2>Камера наблюдения - HIKVISON</h2>
+                    <h2>{{product.name}}</h2>
                     <hr>
                     <div class="product-content-block3-flex">
                         <div class="product-block3-count">
-                            <button>-</button>
-                            2
-                            <button>+</button>
+                            <button @click="count--" :disabled="count<=1">-</button>
+                            {{count}}
+                            <button @click="count++" :disabled="count>=10">+</button>
                         </div>
                         <div class="product-block3-price">
                             <small>Цена</small>
-                            <p>20 000 тенге</p>
+                            <p>{{product.price * count}} тенге</p>
                         </div>
-                        <div class="product-favorite"  @click="favoriteClick()">
-                            <i :class="favorite"></i>
+                        <div class="product-favorite"  @click="favoriteClick(product.id)">
+                            <i class="fa-heart" :class="product.in_favorite===true ? 'fas' : 'far'"></i>
                         </div>
-                        <button>Купить</button>
+                        <button @click="addProduct(product.id, count)">Купить</button>
                     </div>
                     <hr>
                     <div class="product-about">
-                        <p class="about">Описание</p>
-                        <p>Характеристика</p>
+                        <p @click="desc = false" :class="{about: !desc}">Описание</p>
+                        <p @click="desc = true" :class="{about: desc}">Характеристика</p>
                     </div>
                     <hr>
                     <div class="product-about">
-                        <div>
-                            <p>
-                                Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer enim purus, posuere at ultricies eu, placerat a felis. Suspendisse aliquet urna pretium eros convallis interdum. Quisque in arcu id dui vulputate mollis eget non arcu. Aenean et nulla purus. Mauris vel tellus non nunc mattis lobortis. <br>
-                                Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
-                            </p>
+                        <div v-if="!desc">
+                            <p v-html="product.description"></p>
+                        </div>
+                        <div v-if="desc">
+                            <p v-html="product.characteristic"></p>
                         </div>
                     </div>
                 </div>
             </div>
-            <app-similar :productsName="'Похожие товары'"></app-similar>
+            <app-similar :productsName="'Похожие товары'" :cat_id="product.cat_id"></app-similar>
         </div>
+        <mini-banner></mini-banner>
     </div>
 </template>
 
 <script>
     import AppSimilar from '@/components/products/index'
+    import MiniBanner from '@/components/banner/MiniBanner'
+    import {mapGetters} from 'vuex'
     export default {
+        props: {
+            'id': {
+                type: Number,
+                required: true,
+                default: 1
+            },
+        },
         data() {
             return {
                 favoriteActive: false,
-                favorite: 'far fa-heart',
+                favorite: '',
+                count: 1,
+                image: '',
+                desc: false
             }
         },
+        computed: {
+            product() {
+                return this.$store.getters.PRODUCTS.find(b=>b.id ==this.id)
+            },
+            ...mapGetters([
+                'FAVORITE_LIST'
+            ])
+        },
         methods: {
-            favoriteClick(){
-                this.favoriteActive = !this.favoriteActive
-                if(this.favoriteActive)
-                    this.favorite = 'fas fa-heart'
-                else this.favorite = 'far fa-heart'
+            favoriteClick(id){
+                if(localStorage.token !== null){
+                    this.$store.dispatch('POST', [
+                        {
+                            product_id: id
+                        },
+                        {
+                            name: 'favorite'
+                        }
+                    ])
+                    setTimeout(() => {
+                        this.$store.dispatch('GET', 'products')
+                    }, 100);
+                }
+            },
+            addProduct(id, count){
+                this.$store.dispatch('POST', [
+                    {
+                        product_id: id,
+                        count: count    
+                    },
+                    { name: 'basket_add' }
+                ])
+            },
+            openImg(id){
+                this.image = this.product.images[id]
+            },
+            textColor(status){
+                if(status === 'В наличии') return '#32A914'
+                else if(status === 'Мало') return '#FF4858'
+                else if(status === 'Средне') return '#FFAB48'
+                return '#A91414'
             },
         },
         components: {
             AppSimilar,
+            MiniBanner
         },
     }
 </script>

@@ -7,29 +7,39 @@
             <h2 class="h30">Избранное</h2>
             <hr>
             <div class="favorite-content">
-                <div class="home-products-block" v-for="item in 8" :key="item">
-                    <div class="carousel-img">
+                <div class="home-products-block" v-for="item in FAVORITE_LIST" :key="item.id">
+                    <!-- <router-link 
+                        class="carousel-img"
+                        :to="{name: 'product', params: {id: item.id}}"
+                        tag="div"
+                    >
                         <img src="@/assets/images/camera.png" alt="">
-                    </div>
-                    <div class="products-favorite" @click="favoriteClick()">
-                        <i :class="favorite"></i>
+                    </router-link>
+                    <div class="products-favorite" @click="favoriteClick(item.id)">
+                        <i class="fas fa-heart"></i>
                     </div>
                     <div class="home-products-description">
-                        <p>Камера наблюдения - HIKVISION</p>
-                        <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis autem tenetur odit vel reiciendis ipsam blanditiis libero obcaecati ab?</small>
+                        <p>{{item.name}}</p>
+                        <small>{{item.description.slice(0, 100)}}</small>
                         <div class="price">
                             <small>Цена</small>
-                            <p>20 000 тенге</p>
+                            <p>{{item.price}} тенге</p>
                         </div>
-                        <button>Купить</button>
-                    </div>
+                        <button @click="addProduct(item.id)">Купить</button>
+                    </div> -->
+                    <main-product :item="item"></main-product>
                 </div>
             </div>
+            <h2 class="h30" v-if="FAVORITE_COUNT === 0">У вас нет избранных товаров</h2>
         </div>
+        <mini-banner></mini-banner>
     </div>
 </template>
 
 <script>
+    import MiniBanner from '@/components/banner/MiniBanner'
+    import MainProduct from '@/components/products/mainProduct'
+    import {mapGetters} from 'vuex'
     export default {
         data() {
             return {
@@ -38,13 +48,42 @@
                 modalBox: false
             }
         },
+        computed: {
+            ...mapGetters([
+                'FAVORITE_LIST',
+                'FAVORITE_COUNT'
+            ])
+        },
         methods: {
-            favoriteClick(){
-                this.favoriteActive = !this.favoriteActive
-                if(this.favoriteActive)
-                    this.favorite = 'fas fa-heart'
-                else this.favorite = 'far fa-heart'
+            favoriteClick(id){
+                this.$store.dispatch('POST', [
+                    {
+                        product_id: id
+                    },
+                    {
+                        name: 'favorite'
+                    }
+                ])
+                setTimeout(() => {
+                    this.$store.dispatch('GET_EXCEPTION', 'favorite_list')
+                }, 100);
             },
+            addProduct(id, count){
+                this.$store.dispatch('POST', [
+                    {
+                        product_id: id,
+                        count: '1'  
+                    },
+                    { name: 'basket_add' }
+                ])
+            }
+        },
+        created () {
+            this.$store.dispatch('GET_EXCEPTION', 'favorite_list');
+        },
+        components: {
+            MiniBanner,
+            MainProduct
         },
     }
 </script>

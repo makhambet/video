@@ -27,14 +27,17 @@
                 </p>
             </div>
         </div>
+        <mini-banner></mini-banner>
     </div>
 </template>
 
 <script>
+    import MiniBanner from '@/components/banner/MiniBanner'
     import AppQuality from '@/components/trust/quality'
     export default {
         components: {
             AppQuality,
+            MiniBanner
         },
     }
 </script>

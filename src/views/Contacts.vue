@@ -24,11 +24,18 @@
             >
             </iframe>
         </div>
-        
+        <mini-banner></mini-banner>        
     </div>
 </template>
 
 <script>
+    import MiniBanner from '@/components/banner/MiniBanner'
+    
+    export default {
+        components: {
+            MiniBanner
+        },
+    }
 </script>
 
 <style scoped>
