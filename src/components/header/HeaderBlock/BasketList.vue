@@ -2,14 +2,16 @@
     <div class="header-basket-list">
         <i class="fas fa-caret-up"></i>
         <div class="basket-list-content">
-            <div v-show="COUNT !== 0" v-for="(item, index) in BASKET_LIST" :key="index" class="basket-list-block">
-                <div class="basket-list-flex">
-                    <div>
-                        <p class="bold">{{item.product.name}}</p>
-                        <p class="basket-price">{{item.product.price}} тенге</p>
-                    </div>
-                    <div>
-                        <div @click="deleteBasket(item.basket_id)" class="exit">x</div>
+            <div style="overflow-y: scroll; max-height: 200px;" v-if="COUNT !== 0">
+                <div v-for="(item, index) in BASKET_LIST" :key="index" class="basket-list-block">
+                    <div class="basket-list-flex">
+                        <div>
+                            <p class="bold">{{item.product.name}}</p>
+                            <p class="basket-price">{{item.product.price * item.count}} тенге</p>
+                        </div>
+                        <div>
+                            <div @click="deleteBasket(item.basket_id)" class="exit">x</div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,12 +7,7 @@
             <h2 class="h30">Контакты</h2>
             <hr>
             <div class="contact-content">
-                <p class="bold">Адрес нашего офиса</p>
-                <address>проспект Абая 125</address>
-                <p>г. Алматы</p>
-                <small>Пн-Чт: 10:00-00:00</small><br>
-                <small>Пт-Сб: 10:00-00:00</small><br>
-                <small>Вс: 10:00-00:00</small>
+                <div v-html="CONTACT"></div>
             </div>
         </div>
         <div>
@@ -30,10 +25,20 @@
 
 <script>
     import MiniBanner from '@/components/banner/MiniBanner'
-    
+    import { mapGetters } from 'vuex'
     export default {
+        computed: {
+            ...mapGetters([
+                'CONTACT'
+            ])
+        },
         components: {
             MiniBanner
+        },
+        created () {
+            this.$store.dispatch('GET', [
+                { }, {name: 'contact'}
+            ]);
         },
     }
 </script>

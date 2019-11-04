@@ -5,14 +5,16 @@
                 <p>Самый быстрый магазин камер видеонаблюдений в Казахстане</p>
             </div>
             <div class="head-1-block2">
-                <router-link v-if="auth" to="profile">Мой профиль {{name}}</router-link>
+                <router-link v-if="auth" to="/profile">Мой профиль {{name}}</router-link>
                 <span v-if="!auth" @click="signinModalBox = true">Войти</span>
                 <app-signin v-if="signinModalBox" @open="sign()" @closedModal="signinModalBox=false"></app-signin>
 
-                <select>
-                    <option value="ru">Рус</option>
-                    <option value="kz">Каз</option>
-                </select>
+                <span class="exit" @click="logout()">
+                    Выход
+                    <!-- <option value="ru">Выход</option> -->
+                    <!-- <option value="kz">Каз</option> -->
+                </span>
+                <!-- <span>Выход</span> -->
             </div>
         </div>
     </div>
@@ -42,7 +44,17 @@
         methods: {
             sign(){
                 this.signinModalBox = false;
+                this.name = localStorage.name;
                 this.auth = true
+            },
+            logout(){
+                localStorage.clear();
+                this.auth = false;
+                this.$store.dispatch('POST', [
+                    {},
+                    { name: 'user_auth' }
+                ])
+                this.$store.dispatch('GET_EXCEPTION', 'basket_list');
             }
         },
     }

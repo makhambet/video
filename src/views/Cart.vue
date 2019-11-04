@@ -1,6 +1,6 @@
 <template>
     <div class="cart">
-        <div class="wrapper">
+        <div class="wrapper" style="min-height: 30vh;">
             <div class="now-page">
                 <p>Главная > <span>Корзина</span></p>
             </div>
@@ -16,8 +16,9 @@
                 <div v-for="(item, index) in BASKET_LIST" :key="index" class="cart-content-body">
                     <div>
                         <div @click="deleteBasket(item.basket_id)" class="exit">x</div>
-                        <div class="cart-body-img"><img src="@/assets/images/c.png" alt=""></div>
-                        <div>
+                        <div v-if="item.product.images[0] !== undefined" class="cart-body-img"><img :src="item.product.images[0]" alt=""></div>
+                        <div v-if="item.product.images[0] === undefined" class="cart-body-img"><img src="@/assets/images/default.jpg" alt=""></div>
+                        <div style="width: calc(100% - 150px);">
                             <p class="cart-title">{{item.product.name}}</p>
                             <form>
                                 <label><input type="checkbox"> Заказать с установкой</label>
@@ -30,18 +31,16 @@
                         {{item.count}}
                         <button @click="addBasket(item.product.id, '1')" :disabled="item.count>=10">+</button>
                     </div>
-                    <div><p>{{item.product.price * item.count}} тенге</p></div>
+                    <div class="cart-body-totalPrice"><p>{{item.product.price * item.count}} тенге</p></div>
+                    <div><i class="far fa-trash-alt"></i></div>
                 </div>
                 <div class="cart-price">
                     <p>ИТОГО: {{totalPrice()}} тенге</p>
-                    <button>Оформить заказ</button>
+                    <button @click="registr()">Оформить заказ</button>
                 </div>
             </div>
-            <div v-if="COUNT === 0">
-                <h2 class="h30">У вас нет покупок</h2>
-            </div>
-            
-                <p>{{COUNT}}</p>
+            <h2 v-if="COUNT === 0" class="h30">У вас нет покупок</h2>
+            <!-- <h2 class="h30" v-if="!validate()">Вы не авторизовались</h2> -->
         </div>
         <mini-banner></mini-banner>
     </div>
@@ -98,6 +97,16 @@
                     price += this.BASKET_LIST[index].product.price * this.BASKET_LIST[index].count;
                 }
                 return price
+            },
+            validate(){
+                console.log(localStorage.token)
+                if(localStorage.token === undefined && localStorage.token === null && localStorage.token === 'null')
+                    return true;
+                else return false;
+            },
+            registr(){
+                localStorage.video_total_price = this.totalPrice();
+                this.$router.push({path: 'registration'})
             }
         },
         components: {

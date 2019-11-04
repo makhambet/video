@@ -1,0 +1,549 @@
+@media (max-width: 1300px){
+    header .head-2 input{
+        width: 70%;
+    }
+    header .head-2 form {
+        margin-top: 20px;
+        width: 45%;
+        margin-left: 10px;
+    }
+    .head-3 .head-3-block1 li.blue{
+        margin-right: 30px;
+    }
+    .head-3 .head-3-block1 ul li{
+        margin-right: 2%;
+    }
+    .head-3-b ul > li:first-child{
+        margin-right: 10px;
+        padding-right: 10px;
+    }
+
+    .mini-banner .mini-banner-content, .banner .banner-content{
+        width: 80%;
+    }
+
+    .cart-content-count button{
+        margin:  0 10px;
+    }
+}
+@media (max-width: 1200px){
+    body{
+        font-size: 14px;
+    }
+    .wrapper{
+        width: 85%;
+    }
+    header .head-2 input{
+        padding: 8px 8px 8px 24px;
+        font-size: 14px;
+    }
+    header .head-2 form .btn{
+        padding: 7px 8px 8px 8px;
+        font-size: 14px;
+    }
+    header .head-2 form .fa-search{
+        top: 10px;
+    }
+    header .head-2 strong{
+        font-size: 15px;
+    }
+    header .head-2 small{
+        font-size: 8px;
+    }
+    .header-logo{
+        width: 20%;
+        height: 100%;
+        min-width: 140px;
+        margin-top: 10px;
+    }
+    .head-3 .head-3-block1 ul li{
+        margin-right: 1%;
+    }
+    .head-3-b ul > li:first-child{
+        margin-right: 5px;
+        padding-right: 5px;
+    }
+    .mini-banner .mini-banner-content h2, .banner .banner-content h2{
+        font-size: 32px;
+    }
+    .banner .banner-content p{
+        font-size: 28px;
+    }
+    .banner .banner-content img{
+        width: 100%;
+        margin-top: 5%;
+    }
+    .banner .banner-content button{
+        padding: 10px 40px;
+    }
+
+
+
+    .footer .foot-1 > div:first-child{
+        width: 20%;
+    }
+    .footer .foot-1 > div:first-child img{
+        width: 100%;
+        height: auto;
+    }
+
+    .custom-select{
+        width: 200px;
+    }
+}
+@media (max-width: 1078px){
+    .head-3 .head-3-block1 li.blue{
+        display: none;
+    }
+    .head-3 .head-3-block1 ul li{
+        margin-right: 10px;
+    }
+}
+@media (max-width: 1000px){
+    .prevNextBtn{
+        padding-right: 1.9%;
+    }
+    .trust .grid{
+        grid-template-columns: repeat(2, minmax(auto, auto));
+    }
+    .all-content .all-block1{
+        display: none;
+        position: fixed;
+        z-index: 9;
+        background: rgba(0, 0, 0, .3);
+        width: 100%;
+        height: 100vh;
+        left: 0;
+        top: 0;
+    }
+    .all-content .all-block1-active{
+        display: block;
+    }
+    .all-menu .close{
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        height: 100%;
+        top: 0;
+    }
+    .all .nav-2{
+        width: 400px;
+        z-index: 3;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .all-content .all-block2{
+        width: 100%;
+    }
+    .header-logo{
+        margin-top: 15px;
+    }
+
+    .cart-content-count button{
+        margin:  0 5px;
+    }
+    .filteredProduct{
+        display: block;
+    }
+}
+@media (max-width: 947px){
+    .cart-content .cart-price p{
+        font-size: 24px;
+    }
+    .cart-content .cart-price button{
+        width: 240px;
+    }
+    header .head-2 form{
+        width: 40%;
+        margin-top: 20px;
+    }
+    header .head-2 input {
+        padding: 8px 8px 8px 24px;
+        font-size: 13px;
+        width: 74%;
+        border-right: 1px solid #B9B9B9;
+        border-radius: 5px;
+        width: 100%;
+    }
+    header .head-2 form .btn {
+        display: none;
+    }
+    .head-2 .block1, .head-2 .block2{
+        margin-top: 14px;
+    }
+    .registration-content2{
+        display: block;
+    }
+    .banner-content, .banner .banner-slide{
+        height: 300px;
+    }
+
+}
+@media (max-width: 888px){
+    header .head-2 strong{
+        font-size: 14px;
+    }
+    header .head-2 form{
+        width: 35%;
+    }
+    .cart-content-body > div, .cart-content-head > div{
+        width: 15%;
+    }
+    .cart-content-head{
+        display: none;
+    }
+    .cart-content-body{
+        flex-wrap: wrap;
+        padding: 0;
+    }
+    .cart-content-body .cart-body-img{
+        margin-top: 0;
+    }
+    .cart-content-body > div:first-child{
+        margin: 10px 0;
+        width: 100%;
+    }
+    .cart-content-body > div:first-child > div:first-child{
+        display: none;
+    }
+    .cart-content-body > div:first-child > div:last-child{
+        width: calc(100% - 130px);
+    }
+    .cart-body-totalPrice{
+        display: none;
+    }    
+    .cart-content-body > div:last-child{
+        display: block;
+        text-align: right;
+    }
+    .cart-content-body > div{
+        width: 30%;
+    }
+    .cart-content-body > div:last-child i{
+        color: #FF4252;
+        margin-top: 20px;
+    }
+}
+@media (max-width: 768px){
+    .prevNextBtn{
+        padding-right: 1.8%;
+    }
+    .product-content{
+        flex-direction: column;
+    }
+    .product-content-block1, .product-content .product-content-block2{
+        width: 100%;
+    }
+    .product-content-block2 .product-block2-flex-block2 > button{
+        width: calc(100% - 45px);
+        margin-left: 5px;
+    }
+}
+
+
+
+
+@media (max-width: 579px){
+    .banner-content, .banner .banner-slide{
+        height: 200px;
+    }
+    .mini-banner{
+        height: 100px;
+    }
+    .home-products-title h2, .delivery h2, .wrapper > h2.h30{
+        font-size: 20px;
+    }
+    .cart-content .cart-price p{
+        font-size: 20px;
+    }
+    .now-page{
+        padding-top: 0;
+    }
+    .now-page p{
+        font-size: 10px;
+    }
+    .wrapper > h2.h30 {
+        margin-left: 8px;
+    }
+    body{
+        font-size: 13px;
+    }
+    .wrapper {
+        width: 90%;
+    }
+    header .head-1{
+        display: none;
+    }
+    header .fixed{
+        position: static;
+        border-bottom: 1px solid rgba(81, 92, 111, .2);
+    }
+    .header-logo {
+        min-width: 90px;
+        margin-top: 15px;
+    }
+    header .head-2 div > img{
+        margin-top: 0;
+    }
+    .head-2{
+        width: 85%;
+    }
+    header .head-2 form {
+        margin-top: 10px;
+        width: 65%;
+    }
+    header .head-2 form .fa-search{
+        top: 9px;
+    }
+    header .head-2 input {
+        padding: 8px 8px 8px 24px;
+        font-size: 11px;
+        width: 74%;
+        border-right: 1px solid #B9B9B9;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .toggle, .resize, .span{
+        visibility: visible;
+        opacity: 1;
+    }
+    .main-body{
+        margin-top: 0;
+    }
+    .head-3 .head-3-block1 ul, .head-3 .head-3-b ul, .head-2 .block1, .head-2 .block2, footer .foot-1, footer .foot-2, footer .foot-3{
+        display: none;
+    }
+    .mini-banner .wrapper, .banner .wrapper {
+        width: 84%;
+    }
+    footer{
+        margin-bottom: 40px;
+    }
+    .footer-fixed{
+        display: block;
+        font-family: 'Neusa Next Std'
+    }
+
+
+    .mini-banner .mini-banner-content h2, .banner .banner-content h2{
+        font-size: 20px;
+    }
+    .banner .banner-content p{
+        font-size: 16px;
+    }
+    .banner .banner-content button{
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .mini-banner .mini-banner-content, .banner .banner-content{
+        width: 90%;
+    }
+    .mini-banner .mini-banner-content img{
+        width: 100%;
+    }
+    .category .grid > div img{
+        width: 100%;
+        height: 100%;
+        max-width: 200px;
+    }
+    .quality .grid > div img{
+        width: auto;
+        height: auto;
+    }
+    .prevNextBtn {
+        padding-right: 2.8%;
+    }
+    #app .home-products .VueCarousel-navigation-prev, #app .home-products .VueCarousel-navigation-next{
+        right: 3%;
+    }
+    .media-menu{
+        display: block;
+    }
+    .profile-content input{
+        font-size: 12px;
+        padding: 0px 10px;
+        height: 30px;
+    }
+    .profile-content input, .profile-content button{
+        padding: 0 10px;
+    }
+    .profile-content .add{
+        padding: 10px 15px;
+    }
+    .product-content-block2-flex{
+        flex-direction: column;
+    }
+    .product-block2-flex-block2, .product-block2-flex-block1{
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+        justify-content: center;
+    }
+    .product-content-block2 .product-block2-flex-block2 > button {
+        width: 190px;
+        margin-left: 10px;
+    }
+    .enterSetting{
+        display: block;
+        position: absolute;
+        right: 25px;
+        margin-top: -40px;
+        animation: rotating 1s 1;
+    }
+    .enterSetting i{
+        color: rgb(255, 105, 105);
+        font-size: 20px;
+    }
+    .enterSetting:hover{
+        animation: rotating 1s 1;
+    }
+    @keyframes rotating {
+        to{
+            transform: rotate(0);
+        }
+        from{
+            transform: rotate(90deg);
+        }
+    }
+    .enterActive{
+        display: block;
+    }
+    .profile-content-flex .delete{
+        margin-top: 7px;
+    }
+    footer .hr{
+        display: none;
+    }
+    footer .foot-4 > div:first-child{
+        width: 100%;
+    }
+    footer .foot-4 > div:last-child{
+        display: none;
+    }
+    .thanks-content{
+        max-width: 80%;
+    }
+    .registration-content{
+        display: block;
+    }
+    .registration-content > div:first-child, .registration-content > div:last-child{
+        width: 100%;
+    }
+    .filteredProduct{
+        margin-top: 10px;
+    }
+    .fixed-back .content form input[type="submit"]{
+        width: 100%;
+    }
+    
+}
+@media (max-width: 479px){
+    .mini-banner .mini-banner-content, .banner .banner-content{
+        flex-direction: column-reverse;
+    }
+    .mini-banner .wrapper, .banner .wrapper{
+        width: 78%;
+    }
+    .banner .banner-content > div:first-child{
+        max-width: 100%;
+    }
+    .mini-banner .mini-banner-content h2, .banner .banner-content h2{
+        margin-top: 0;
+    }
+    .banner .banner-content p{
+        margin-bottom: 10px;
+    }
+    .product-content-block2 .product-block2-price p{
+        font-size: 16px;
+    }
+    .product-content-block1{
+        flex-direction: column-reverse;
+    }
+    .product-content .product-block1-img{
+        width: 100%;
+    }
+    .product-block1-images{
+        width: 100%;
+        display: flex;
+        margin-top: 10px;
+    }
+    .product-block1-images > div:not(:last-child){
+        margin-right: 10px;
+    }
+    .fixed-back > div:first-child{
+        width: 340px;
+    }
+    .enter .fixed-back > div:first-child{
+        width: 300px;
+    }
+    .fixed-back > div:first-child h2{
+        font-size: 16px;
+    }
+    .fixed-back .content form input{
+        padding: 8px 0 8px 12px; 
+    }
+    .registration .registration-content2 .max-input{
+        width: calc(100% - 24px);
+    }
+    .registration .registration-content2 .mini-input{
+        width: calc(46% - 19px);
+        margin-right: 5%;
+    }
+    .product-content-block2 .product-about{
+        flex-direction: column;
+    }
+    .product-content-block2 .product-about > p:last-child{
+        margin-left: 0;
+    }
+}
+@media (max-width: 425px){
+    .header-logo {
+        min-width: 80px;
+        margin-top: 15px;
+    }
+    .trust .grid {
+        grid-template-columns: repeat(1, minmax(auto, auto));
+    }
+    .category .grid > div img{
+        width: auto;
+        height: auto;
+    }
+    .quality .grid > div img{
+        width: auto;
+        height: auto;
+    }
+    .home-products-title h2, .delivery h2, .wrapper > h2.h30, .cart-content .cart-price p{
+        font-size: 18px;
+    }
+    .prevNextBtn {
+        padding-right: 2.6%;
+    }
+    .registration .address > div:first-child{
+        width: calc(100% - 24px);
+    }
+    .cart-content-body > div:first-child > div:last-child{
+        width: calc(100% - 100px);
+    }
+    .cart-content-body .cart-body-img{
+        width: 100px;
+        height: 100px;
+    }
+}
+@media (max-width: 350px){
+    .mini-banner .wrapper, .banner .wrapper{
+        width: 74%;
+    }
+    .banner .banner-content > div:first-child{
+        text-align: center;
+    }
+    .banner .banner-content p{
+        margin-bottom: 5px;
+    }
+    .fixed-back > div:first-child{
+        width: 300px;
+    }    
+    .enter .fixed-back > div:first-child{
+        width: 250px;
+    }
+}

@@ -3,9 +3,13 @@
         <mini-block></mini-block>
         <div :class="{'header-scroll' : scrollActive}" class="fixed">
             <div class="wrapper">
-                <main-block></main-block>
+                <main-block :media="media" @close="media = !media"></main-block>
                 <nav-bar></nav-bar>
             </div>
+        </div>
+        <media-menu @close="media = !media" :class="{'mediActive': media}"></media-menu>
+        <div @click="media = false" v-if="media" class="header-close">
+
         </div>
     </header>
 </template>
@@ -14,10 +18,12 @@
     import MiniBlock from './HeaderBlock/MiniBlock'
     import MainBlock from './HeaderBlock/MainBlock'
     import NavBar from './HeaderBlock/NavBar'
+    import MediaMenu from './HeaderBlock/MediaMenu'
     export default {
         data() {
             return {
                 scrollActive: false,
+                media: false
             }
         },
         methods: {
@@ -37,6 +43,7 @@
             MiniBlock,
             MainBlock,
             NavBar,
+            MediaMenu
         },
     }
 </script>

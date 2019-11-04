@@ -2,10 +2,10 @@
     <div class="menu-list">
         <nav>
             <ul>
-                <li class="submenu-list" v-for="(item, index) in menuList" :key="index">
-                    <p>{{item.name}}</p>
+                <li v-show="item.parent_id !== -1" class="submenu-list" v-for="(item, index) in CATS" :key="index">
+                    <p @mouseover="open(item.id)">{{item.name}}</p>
                     <ul>
-                        <li class="grandmenu-list" v-for="(child, i) in item.children" :key="i">
+                        <li @click="goToProduct(child.id)" class="grandmenu-list" v-for="(child, i) in SUB_CATS" :key="i">
                             {{child.name}}
                         </li>
                     </ul>
@@ -16,149 +16,36 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         computed: {
-            menuList() {
-                return [
+            ...mapGetters([
+                'CATS',
+                'SUB_CATS'
+            ]),
+        },
+        methods: {
+            open(id) {
+                this.$store.dispatch('GET_SHOW', [
                     {
-                        name: 'Все разделы',
-                        children: [
-                            {
-                                name: 'AirPort & Wireless'
-                            },
-                            {
-                                name: 'AppleCare'
-                            },
-                            {
-                                name: 'Bags, Shells & Sleeves'
-                            },
-                            {
-                                name: 'Business & Security'
-                            },
-                            {
-                                name: 'Cables & Docks'
-                            },
-                            {
-                                name: 'Cameras & Video'
-                            },
-                            {
-                                name: 'Car & Travel'
-                            },
-                            {
-                                name: 'Cases & Films'
-                            },
-                            {
-                                name: 'AirPort & Wireless'
-                            },
-                            {
-                                name: 'AppleCare'
-                            },
-                            {
-                                name: 'Bags, Shells & Sleeves'
-                            },
-                            {
-                                name: 'Business & Security'
-                            },
-                            {
-                                name: 'Cables & Docks'
-                            },
-                            {
-                                name: 'Cameras & Video'
-                            },
-                            {
-                                name: 'Car & Travel'
-                            },
-                            {
-                                name: 'Cases & Films'
-                            },
-                            {
-                                name: 'AirPort & Wireless'
-                            },
-                            {
-                                name: 'AppleCare'
-                            },
-                            {
-                                name: 'Bags, Shells & Sleeves'
-                            },
-                        ]
+                        id: id
                     },
                     {
-                        name: 'Все разделы',
-                        children: [
-                            {
-                                name: 'AirPort & Wireless'
-                            },
-                            {
-                                name: 'AppleCare'
-                            },
-                            {
-                                name: 'Bags, Shells & Sleeves'
-                            },
-                            {
-                                name: 'Business & Security'
-                            },
-                            {
-                                name: 'Cables & Docks'
-                            },
-                            {
-                                name: 'Cameras & Video'
-                            },
-                            {
-                                name: 'Car & Travel'
-                            },
-                            {
-                                name: 'Cases & Films'
-                            },
-                            {
-                                name: 'AirPort & Wireless'
-                            },
-                            {
-                                name: 'AppleCare'
-                            },
-                        ]
-                    },
-                    {
-                        name: 'Все разделы',
-                        children: [
-                                                        {
-                                name: 'Bags, Shells & Sleeves'
-                            },
-                            {
-                                name: 'Business & Security'
-                            },
-                            {
-                                name: 'Cables & Docks'
-                            },
-                            {
-                                name: 'Cameras & Video'
-                            },
-                            {
-                                name: 'Car & Travel'
-                            },
-                            {
-                                name: 'Cases & Films'
-                            },
-                            {
-                                name: 'AirPort & Wireless'
-                            },
-                            {
-                                name: 'AppleCare'
-                            },
-                            {
-                                name: 'Bags, Shells & Sleeves'
-                            },
-                        ]
-                    },
-                    {
-                        name: 'Все разделы',
-                    },
-                    {
-                        name: 'Все разделы',
-                    },
-                    {
-                        name: 'Все разделы',
+                        name: 'cats'
                     }
-                ]
+                ])
+            },
+            goToProduct(id){
+                this.$store.dispatch('GET', [
+                    {
+                        'cats[0]': id
+                    },
+                    {
+                        name: 'products'
+                    }
+                ]);
+                this.$emit('close');
+                this.$router.push({path: '/all-products'})
             }
         },
     }

@@ -1,59 +1,48 @@
 <template>
     <div class="all-menu">
-        <nav class="all-menu-nav">
-            <h2>Разделы</h2>
-            <ul>
-                <li v-for="(item, index) in CATS" :key="index">
-                    <p><i class="fas fa-angle-down"></i> {{item.name}}</p>
-                    <ul>
-                        <li class="all-submenu">
-                            <div>
-                                <label><input type="checkbox"> HIKVISION</label>
-                            </div>
-                            <div>
-                                <label><input type="checkbox"> SAMSUNG</label>
-                            </div>
-                            <div>
-                                <label><input type="checkbox"> Red</label>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <p><i class="fas fa-angle-down"></i> Камера видеонаблюдения</p>
-                </li>
-                <li>
-                    <p><i class="fas fa-angle-down"></i> Камера видеонаблюдения</p>
-                </li>
-                <li>
-                    <p><i class="fas fa-angle-down"></i> Камера видеонаблюдения</p>
-                </li>
-            </ul>
-        </nav>
-        <div class="all-menu-nav">
-            <h2>Разделы</h2>
-            <p><strong>Диапазон:</strong> от 100 - 200 000 тенге</p>
-            <div class="range-input">
-                <div class="s1-price-from">
-                    <label><input v-model.number="minPrice" type="number"  min="100" :max="maxPrice"/></label>
+        <div class="nav-2">
+            <nav class="all-menu-nav">
+                <h2>Разделы</h2>
+                <ul>
+                    <li v-show="item.parent_id !== -1" v-for="(item, index) in CATS" :key="index">
+                        <p @click="openCats(index, item.id)">
+                            <i class="fas" :class="{'fa-angle-up': index === id, 'fa-angle-down' : index !== id}"></i>
+                            {{item.name}}
+                        </p>
+                        <ul v-if="index===id">
+                            <li v-for="(child, i) in SUB_CATS" :key="i" class="all-submenu">
+                                <div>
+                                    <label><input v-model="childCats" type="checkbox" :value="child.id">{{child.name}}</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="all-menu-nav">
+                <h2>Разделы</h2>
+                <p><strong>Диапазон:</strong> от {{PRICEMIN}} - {{PRICEMAX}} тенге</p>
+                <div class="range-input">
+                    <div class="s1-price-from">
+                        <label><input v-model.number="minPrice" type="number"  :min="PRICEMIN" :max="PRICEMAX"/></label>
+                    </div>
+                    <span>&mdash;</span>
+                    <div class="s1-price-to">
+                        <input  v-model.number="maxPrice" type="number"  :min="PRICEMIN" :max="PRICEMAX"/>
+                    </div>
                 </div>
-                <span>&mdash;</span>
-                <div class="s1-price-to">
-                    <input  v-model.number="maxPrice" type="number"  :min="minPrice" max="200000"/>
+                <div class="range-slider">
+                    <input @change="slider" v-model.number="minPrice" :min="PRICEMIN" :max="PRICEMAX" step="100" type="range" />
+                    <input @change="slider" v-model.number="maxPrice" :min="PRICEMIN" :max="PRICEMAX" step="100" type="range" />
+                    <svg width="100%" height="24"></svg>
                 </div>
-            </div>
-            <div class="range-slider">
-                <input @change="slider" v-model.number="minPrice" min="100" :max="maxPrice" step="100" type="range" />
-                <input @change="slider" v-model.number="maxPrice" :min="minPrice" max="200000" step="100" type="range" />
-                <svg width="100%" height="24"></svg>
-            </div>
-            <div class="all-menu-btn">
-                <button @click="searchFilter()">Найти</button><br>
-                <button v-if="reserted" @click="reset()">Сбросить</button>
+                <div class="all-menu-btn">
+                    <button @click="searchFilter()">Найти</button><br>
+                    <button v-if="reserted" @click="reset()">Сбросить</button>
+                </div>
             </div>
         </div>
-        <p>{{parentCats}}</p>
-        <p>{{childCats}}</p>
+        <div @click="$emit('close')" class="close"></div>
     </div>
 </template>
 
@@ -66,75 +55,85 @@
                 maxPrice: 200000,
                 parentCats: [],
                 childCats: [],
-                reserted: false
+                reserted: false,
+                id: null,
+                cat_id: []
             }
         },
         methods: {
             slider: function() {
-                if (this.minPrice > this.maxPrice) {
-                    var tmp = this.maxPrice;
-                    this.maxPrice = this.minPrice;
-                    this.minPrice = tmp;
-                }
+                // if (this.minPrice > this.maxPrice) {
+                //     var tmp = this.maxPrice;
+                //     this.maxPrice = this.minPrice;
+                //     this.minPrice = tmp;
+                // }
             },
             searchFilter(){
-                if(this.minPrice >= 100){
-                    this.$store.dispatch('GET_PRICE', [
-                        {
-                            price: this.minPrice
-                        },
-                        {
-                            name: 'pricemin'
-                        }
-                    ])
+                let formData = new FormData();
+                formData.append('price_min', this.minPrice)
+                formData.append('price_max', this.maxPrice);
+                console.log(this.childCats)
+                let arr = {
+                    'price_min': this.minPrice,
+                    'price_max': this.maxPrice,
+                    'page': 1
+                };
+                for (let i = 0; i < this.childCats.length; i++) {
+                    arr['cats[' + i + ']'] = this.childCats[i];
                 }
-                if(this.maxPrice <= 200000){
-                    this.$store.dispatch('GET_PRICE', [
-                        {
-                            price: this.maxPrice
-                        },
-                        {
-                            name: 'pricemax'
-                        }
-                    ])
-                }
+                console.log(arr)
+                // arr.push({'price_min': this.minPrice})
+                this.$store.dispatch('GET', [
+                    arr,
+                    {
+                        name: 'products'
+                    }
+                ])
                 this.reserted = true
             },
             reset(){
-                this.minPrice = 100;
-                this.maxPrice = 200000;
-                this.reserted = false
-                this.$store.dispatch('GET_PRICE', [
+                this.$store.dispatch('GET', [
                     {
-                        price: 0
+                        page: 1
                     },
                     {
-                        name: 'pricemin'
+                        name: 'products'
                     }
-                ]);
-                this.$store.dispatch('GET_PRICE', [
+                ])
+                this.minPrice = this.PRICEMIN;
+                this.maxPrice = this.PRICEMAX;
+                this.reserted = false;
+            },
+            openCats(index, id){
+                if(index !== this.id) this.id = index;
+                else this.id = null;
+                this.$store.dispatch('GET_SHOW', [
                     {
-                        price: 200000
+                        id: id
                     },
                     {
-                        name: 'pricemax'
+                        name: 'cats'
                     }
-                ]);
+                ])
             }
         },
         computed: {
             ...mapGetters([
-                'CATS'
+                'CATS',
+                'SUB_CATS',
+                'PRICEMIN',
+                'PRICEMAX'
             ]),
-            menuItems(){
-                let cats = this.CATS
-                for (let index = 0; index < cats.length; index++) {
-                    if(cats[index].parent_id === 0)
-                        this.parentCats.push(cats[index]);
-                    if(cats[index].parent_id === 1)
-                        this.childCats.push(cats[index]);
-                }
-            },
+        },
+        mounted () {
+            console.log(this.minPrice)
+            console.log(this.maxPrice)
+            setTimeout(() => {
+                this.minPrice = this.PRICEMIN;
+                this.maxPrice = this.PRICEMAX;
+            }, 400);
+            console.log(this.minPrice)
+            console.log(this.maxPrice)
         },
     }
 </script>

@@ -7,10 +7,10 @@
             </div>
         </div>
         <div class="prod-hr"></div>
-        <carousel :perPage="1" :perPageCustom="[[360,1], [480, 2], [768, 3], [1200,4]]" :navigationPrevLabel="'&lt;'" :navigationNextLabel="'&gt;'" :touchDrag="false" :paginationSize="0" :mouse-drag="true" :loop="true" :navigationEnabled="true">
+        <carousel :perPage="1" :perPageCustom="[[0,1], [480, 2], [768, 3], [1200,4]]" :navigationPrevLabel="'&lt;'" :navigationNextLabel="'&gt;'" :touchDrag="false" :paginationSize="0" :mouse-drag="true" :loop="true" :navigationEnabled="true">
             <slide  v-for="(item, index) in similarProducts" :key="index">
                 <main-product :item="item">
-                    <div @click="modalBox=true" v-if="onceClick" class="home-products-once">
+                    <div @click="modalBox=true" class="home-products-once">
                         Купить в один клик
                     </div>
                 </main-product>    
@@ -35,9 +35,6 @@
             onceClick:{
                 type: Boolean,
                 default: false
-            },
-            cat_id:{
-                type: Number,
             }
         },
         data() {
@@ -51,11 +48,6 @@
         computed: {
             similarProducts(){
                 let products = this.$store.getters.PRODUCTS
-                if(this.cat_id){
-                    products = products.filter(b => 
-                    b.cat_id.toString().indexOf(this.cat_id) >= 0)
-                    return products.slice(0, 10)
-                }
                 return products
             }
         },

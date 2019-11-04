@@ -12,6 +12,7 @@
                     <input v-model="email" type="email" placeholder="Введите email">
                     <label>Пароль:</label>
                     <input v-model="password" type="password" placeholder="Введите пароль">
+                    <label style="text-align: left; color: rgb(255, 105, 105);">{{message}}</label>
                     <div class="content-flex">
                         <label class="forget">Забыли пароль?</label>
                         <label class="memorize">Запомнить меня<input type="checkbox"></label>
@@ -32,6 +33,7 @@
         <app-policy v-if="policy" class="policy">
             <input @click.prevent="closed('policy', 'signup')" type="submit" value="Назад">
         </app-policy>
+        <modal-box v-if="box" :boxText="'Добро пожаловать!'" :typeInfo="'success'"></modal-box>
         <div @click.prevent="$emit('closedModal')" class="closed"></div>
     </div>
 </template>
@@ -40,6 +42,7 @@
     import AppSignup from '../signup/index'
     import AppPolicy from '../signup/policy'
     import axios from 'axios'
+    import ModalBox from '@/components/ModalBox'
     export default {
         data() {
             return {
@@ -47,7 +50,9 @@
                 signup: false,
                 policy: false,
                 email: '',
-                password: ''
+                password: '',
+                message: '',
+                box: false
             }
         },
         methods: {
@@ -80,18 +85,20 @@
                         localStorage.token = response.data.result.token,
                         this.login = true
                         this.$store.dispatch('POST', [
-                            {
-
-                            },
-                            {
-                                name: 'user_auth'
-                            }
+                            { },
+                            { name: 'user_auth' }
                         ]);
-                        this.$emit('open')
+                        this.$store.dispatch('GET_EXCEPTION', 'basket_list');
+                        this.box = true;
+                        setTimeout(() => {
+                            this.$emit('open')
+                            this.box = false;
+                        }, 1000);
                     }
                 })
                 .catch(error => {
                     console.log(error.response)
+                    this.message = error.response.data.message
                 })
             },
             openning(data){
@@ -101,7 +108,8 @@
         },
         components: {
             AppSignup,
-            AppPolicy
+            AppPolicy,
+            ModalBox
         },
     }
 </script>
